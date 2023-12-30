@@ -58,7 +58,7 @@ jobs:
 
     - name: Create Release
       id: create_release
-      uses: actions/create-release@v1.13.0
+      uses: ncipollo/release-action@v1.13.0      
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -67,8 +67,8 @@ jobs:
         draft: false
         prerelease: false
 
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1.1.0
+    - name: Upload Release Asset(s)
+      uses: sekwah41/upload-release-assets@v1.1.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
