@@ -34,12 +34,11 @@ jobs:
         name: TestBinary
         path: ./a.exe
 
-    - name: Get commit hash
-      id: get_hash
-      run: echo "hash=$(echo $GITHUB_SHA)" >> $GITHUB_ENV
-
-    - name: Print env
-      run: echo $hash
+    - name: Set env
+      run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+      
+    - name: Test
+      run: echo $GITHUB_SHA_SHORT
 
     - name: Create Release
       id: create_release
