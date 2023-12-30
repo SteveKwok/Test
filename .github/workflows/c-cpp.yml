@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ "main" ]
 
+permissions:
+  contents: write
+  
 jobs:
   build:
 
@@ -27,4 +30,22 @@ jobs:
       with:
         name: TestBinary
         path: ./a.exe
+
+    - name: Get commit hash
+      id: get_hash
+      run: echo "hash=$GITHUB_SHA" >> $GITHUB_ENV
+
+    - name: Print env
+      run: echo "Hash is ${ hash }"
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ env.hash }}
+        release_name: Release ${{ env.hash }}
+        draft: false
+        prerelease: false
         
