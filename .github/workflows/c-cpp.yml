@@ -22,8 +22,8 @@ jobs:
     - name: Compile
       run: g++ main.cpp
 
-    - name: Display current directory
-      run: dir
+    # - name: Display current directory
+    #   run: dir
 
     - name: Run the program
       run: ./a.exe
@@ -35,12 +35,12 @@ jobs:
         path: ./a.exe
 
     - name: Set env
-      run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+      run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
       shell: bash
       
-    - name: Test
-      run: echo $GITHUB_SHA_SHORT
-      shell: bash
+    # - name: Test
+    #   run: echo $GITHUB_SHA_SHORT
+    #   shell: bash
 
     - name: Create Release
       id: create_release
@@ -49,7 +49,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ env.GITHUB_SHA_SHORT }}
-        release_name: Release ${{ env.GITHUB_SHA_SHORT }}
+        release_name: Latest Release ${{ env.GITHUB_SHA_SHORT }}
         draft: false
         prerelease: false
         
