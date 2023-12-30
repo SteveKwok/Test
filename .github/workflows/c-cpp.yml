@@ -56,9 +56,11 @@ jobs:
     #   run: echo $GITHUB_SHA_SHORT
     #   shell: bash
 
-    - name: Create Release
+    - name: Create a Release (node16)
+    # - name: Create Release
       id: create_release
-      uses: actions/create-release@v1 
+      # uses: actions/create-release@v1 
+      uses: chapmanjacobd/create-release-node16@v1.1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
