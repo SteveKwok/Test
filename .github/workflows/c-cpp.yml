@@ -52,4 +52,14 @@ jobs:
         release_name: ${{ env.GITHUB_SHA_SHORT }}
         draft: false
         prerelease: false
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://github.blog/2020-08-03-github-actions-improvements-for-fork-and-pull-request-workflows/
+        asset_path: ./TestBinary.zip
+        asset_name: TestBinary.zip
+        asset_content_type: application/zip
         
