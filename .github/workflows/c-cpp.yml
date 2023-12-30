@@ -16,6 +16,9 @@ jobs:
     - name: Compile
       run: echo "g++ main.cpp"
 
+    - name: Display Current Directory
+      run: echo "dir"
+
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
