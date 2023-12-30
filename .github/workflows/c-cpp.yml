@@ -36,10 +36,10 @@ jobs:
 
     - name: Get commit hash
       id: get_hash
-      run: echo "hash=$(echo ${GITHUB_SHA})" >> $GITHUB_ENV
+      run: echo "hash=$(echo $GITHUB_SHA)" >> $GITHUB_ENV
 
     - name: Print env
-      run: echo "Hash is ${ hash }"
+      run: echo $hash
 
     - name: Create Release
       id: create_release
