@@ -31,12 +31,12 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: TestBinary
+        name: Test
         path: ./a.exe
 
     - name: Zip the artifact
       run: |
-        7z a ./TestBinary.zip ./a.exe
+        7z a ./Test.zip ./a.exe
 
     - name: Set env
       run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
@@ -46,11 +46,11 @@ jobs:
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "preview"
+        automatic_release_tag: ${{ env.GITHUB_SHA_SHORT }}
         prerelease: true
-        title: "Latest Preview Build"
+        title: ${{ env.GITHUB_SHA_SHORT }}
         files: |
-          ./TestBinary.zip
+          ./Test.zip
       
     # - name: Test
     #   run: echo $GITHUB_SHA_SHORT
