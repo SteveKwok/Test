@@ -36,7 +36,7 @@ jobs:
 
     - name: Zip the artifact
       run: |
-        zip -r ./TestBinary.zip ./a.exe
+        7z a ./TestBinary.zip ./a.exe
 
     - name: Set env
       run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
