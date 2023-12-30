@@ -2,7 +2,7 @@
 
 int main()
 {
-	std::cout << "Test Github Actions!" << std::endl;
+	std::cout << "Test Github Actions" << std::endl;
 	
 	return 0;
 }
