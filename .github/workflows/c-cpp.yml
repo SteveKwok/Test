@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 env:
-  hash: ${{ GITHUB_SHA }}
+  SOLUTION_FILE_PATH: .
 
 permissions:
   contents: write
@@ -34,9 +34,9 @@ jobs:
         name: TestBinary
         path: ./a.exe
 
-    # - name: Get commit hash
-    #   id: get_hash
-    #   run: echo "hash=${GITHUB_SHA}" >> $GITHUB_ENV
+    - name: Get commit hash
+      id: get_hash
+      run: echo "hash=${{ env.GITHUB_SHA }}" >> $GITHUB_ENV
 
     - name: Print env
       run: echo "Hash is ${ hash }"
@@ -47,8 +47,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ env.hash }}
-        release_name: Release ${{ env.hash }}
+        tag_name: ${{ env.GITHUB_SHA }}
+        release_name: Release ${{ env.GITHUB_SHA }}
         draft: false
         prerelease: false
         
