@@ -34,6 +34,10 @@ jobs:
         name: TestBinary
         path: ./a.exe
 
+    - name: Zip the artifact
+      run: |
+        zip -r ./TestBinary.zip ./a.exe
+
     - name: Set env
       run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
       shell: bash
@@ -59,7 +63,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://github.blog/2020-08-03-github-actions-improvements-for-fork-and-pull-request-workflows/
-        asset_path: ./a.exe
+        asset_path: ./TestBinary.zip
         asset_name: TestBinary.zip
         asset_content_type: application/zip
         
