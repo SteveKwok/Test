@@ -33,7 +33,7 @@ jobs:
 
     - name: Get commit hash
       id: get_hash
-      run: echo "hash=$GITHUB_SHA" >> $GITHUB_ENV
+      run: echo "hash=${GITHUB_SHA}" >> $GITHUB_ENV
 
     - name: Print env
       run: echo "Hash is ${ hash }"
