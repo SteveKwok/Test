@@ -1,0 +1,80 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  SOLUTION_FILE_PATH: .
+
+permissions:
+  contents: write
+  
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Compile
+      run: g++ main.cpp
+
+    # - name: Display current directory
+    #   run: dir
+
+    # - name: Run the program
+    #   run: ./a.exe
+
+    # - name: Upload artifact
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: Test
+    #     path: ./a.exe
+
+    - name: Zip the artifact
+      run: |
+        7z a ./test.zip ./a.exe
+
+    - name: Set env
+      run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
+      shell: bash
+
+    # - name: Create wip release
+    #   uses: "marvinpinto/action-automatic-releases@latest"
+    #   with:
+    #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
+    #     automatic_release_tag: wip
+    #     prerelease: true
+    #     title: WIP Release
+    #     files: |
+    #       ./test.zip
+      
+    # - name: Test
+    #   run: echo $GITHUB_SHA_SHORT
+    #   shell: bash
+
+    - name: Create a Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ env.GITHUB_SHA_SHORT }}
+        release_name: ${{ env.GITHUB_SHA_SHORT }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset(s)
+      # uses: sekwah41/upload-release-assets@v1.1.0
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./test.zip
+        asset_name: test.zip
+        asset_content_type: application/zip
+        
