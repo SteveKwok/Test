@@ -42,39 +42,39 @@ jobs:
       run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
       shell: bash
 
-    # - name: Create wip release
-    #   uses: "marvinpinto/action-automatic-releases@latest"
-    #   with:
-    #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
-    #     automatic_release_tag: wip
-    #     prerelease: true
-    #     title: WIP Release
-    #     files: |
-    #       ./test.zip
+    - name: Create wip release
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: wip
+        prerelease: true
+        title: WIP Release
+        files: |
+          ./test.zip
       
     # - name: Test
     #   run: echo $GITHUB_SHA_SHORT
     #   shell: bash
 
-    - name: Create a Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ env.GITHUB_SHA_SHORT }}
-        release_name: ${{ env.GITHUB_SHA_SHORT }}
-        draft: false
-        prerelease: false
+    # - name: Create a Release
+    #   id: create_release
+    #   uses: actions/create-release@v1
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   with:
+    #     tag_name: ${{ env.GITHUB_SHA_SHORT }}
+    #     release_name: ${{ env.GITHUB_SHA_SHORT }}
+    #     draft: false
+    #     prerelease: false
 
-    - name: Upload Release Asset(s)
-      # uses: sekwah41/upload-release-assets@v1.1.0
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./test.zip
-        asset_name: test.zip
-        asset_content_type: application/zip
+    # - name: Upload Release Asset(s)
+    #   # uses: sekwah41/upload-release-assets@v1.1.0
+    #   uses: actions/upload-release-asset@v1
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   with:
+    #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+    #     asset_path: ./test.zip
+    #     asset_name: test.zip
+    #     asset_content_type: application/zip
         
