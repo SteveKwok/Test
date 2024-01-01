@@ -42,6 +42,18 @@ jobs:
       run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
       shell: bash
 
+    - name: Auto Increment Version
+      uses: docker://igorgov/auto-inc-ver:v2.0.0
+      id: versioning
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        mode: stable
+
+    - name: Print next release version
+      shell: bash
+      run: |
+        echo "${{ steps.versioning.outputs.version }}"  
+
     # - name: Create wip release
     #   uses: "marvinpinto/action-automatic-releases@latest"
     #   with:
