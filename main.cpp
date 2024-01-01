@@ -2,7 +2,7 @@
 
 int main()
 {
-	std::cout << "Test" << std::endl;
+	std::cout << "Test versioning" << std::endl;
 	
 	return 0;
 }
