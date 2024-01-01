@@ -42,13 +42,12 @@ jobs:
       run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
       shell: bash
 
-    - name: Setup Earthly
-      uses: earthly/actions-setup@v1
+    - name: Get next version
+      uses: reecetech/version-increment@2023.9.3
+      id: version
       with:
-        version: v0.7.23
-    - name: Earthly version
-      id: earthly
-      run: earthly --version
+        scheme: semver
+        increment: patch
 
     # - name: Create wip release
     #   uses: "marvinpinto/action-automatic-releases@latest"
@@ -70,8 +69,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.earthly.outputs.patch }}
-        release_name: ${{ steps.earthly.outputs.patch }}
+        tag_name: v0.6.0.1000
+        release_name: WIP Release
         draft: false
         prerelease: false
 
