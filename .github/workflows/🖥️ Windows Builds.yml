@@ -42,16 +42,12 @@ jobs:
       run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
       shell: bash
 
-    - name: Get previous tag
-      id: previoustag
-      uses: 'WyriHaximus/github-action-get-previous-tag@v1'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Get next minor version
-      id: semver
-      uses: 'WyriHaximus/github-action-next-semvers@v1'
+    - name: Setup Earthly
+      uses: earthly/actions-setup@v1
       with:
-        version: ${{ steps.previoustag.outputs.tag }}
+        version: v0.5.11
+    - name: Earthly version
+      run: earthly --version
 
     # - name: Create wip release
     #   uses: "marvinpinto/action-automatic-releases@latest"
